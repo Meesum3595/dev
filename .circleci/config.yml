@@ -32,17 +32,18 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "Logging into Docker Hub..."
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-              
+        
               echo "Building application binary..."
               go install --ldflags '-extldflags "-static"' github.com/Meesum3595/dev
-              
+            
               echo "Preparing binary for docker image..."
               mkdir -p bin
               cp "$GOPATH_HEAD/bin/dev" bin/invoicer
-              
+        
               echo "Building Docker image..."
-              docker build -t ${DOCKER_REPO}:latest .
-              
+              docker build -t meesum3595/meesum:latest .
+        
               echo "Pushing Docker image to Docker Hub..."
-              docker push ${DOCKER_REPO}:latest
+              docker push meesum3595/meesum:latest
             fi
+
